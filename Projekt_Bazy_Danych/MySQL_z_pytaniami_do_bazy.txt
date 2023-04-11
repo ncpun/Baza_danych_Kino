@@ -1,0 +1,299 @@
+CREATE DATABASE projekt; 
+
+USE projekt; 
+
+CREATE TABLE Film (  
+
+ID INT AUTO_INCREMENT PRIMARY KEY,  
+
+Tytul VARCHAR(50) NOT NULL,  
+
+Gatunek VARCHAR(50) NOT NULL ); 
+
+
+
+CREATE TABLE Klient ( 
+
+ID INT AUTO_INCREMENT PRIMARY KEY, 
+
+Imie VARCHAR(50) NOT NULL,  
+
+Nazwisko VARCHAR(50) NOT NULL ); 
+
+
+
+CREATE TABLE Sala (  
+
+ID INT AUTO_INCREMENT PRIMARY KEY,  
+
+Numer INT NOT NULL,  
+
+Rodzaj_technologii VARCHAR(30) NOT NULL );  
+
+
+CREATE TABLE Seans (  
+
+ID INT AUTO_INCREMENT PRIMARY KEY,  
+
+FilmID INT NOT NULL,   
+
+Godzina TIME NOT NULL,  
+
+FOREIGN KEY (FilmID) REFERENCES Film(ID) );  
+
+
+
+CREATE TABLE Bilet (  
+
+ID INT AUTO_INCREMENT PRIMARY KEY,  
+
+KlientID INT NOT NULL,  
+
+SeansID INT NOT NULL,  
+
+Rodzaj VARCHAR(50) NOT NULL,  
+
+Cena DECIMAL(10,2) NOT NULL,  
+
+SalaID INT NOT NULL,  
+
+Rzad INT NOT NULL,  
+
+Miejsce  INT NOT NULL,  
+
+FOREIGN KEY (KlientID) REFERENCES Klient(ID),  
+
+FOREIGN KEY (SalaID) REFERENCES Sala(ID),  
+
+FOREIGN KEY (SeansID) REFERENCES Seans(ID) );  
+ 
+
+
+
+CREATE TABLE Repertuar (  
+
+ID INT AUTO_INCREMENT PRIMARY KEY,  
+
+Data_od DATE NOT NULL,  
+
+Data_do DATE NOT NULL, 
+
+FilmID INT NOT NULL,   
+
+FOREIGN KEY (FilmID) REFERENCES Film(ID) );  
+
+ 
+
+INSERT INTO Film (ID, Tytul, Gatunek) VALUES  
+
+(1, "Nietykalni", "Biograficzny"),  
+
+(2, "Zielona mila", "Dramat"),  
+
+(3, "Ojciec chrzestny", "Dramat"),  
+
+(4, "Dwunastu gniewnych ludzi", "Dramat sądowy"),  
+
+(5, "Forrest Gump", "Komedia"),  
+
+(6, "Lot nad kukułczym gniazdem", "Psychologiczny"),  
+
+(7, "Ojciec chrzestny II", "Dramat, Gangsterski"),  
+
+(8, "Lista Schindlera", "Wojenny"),  
+
+(9, "Pulp Fiction", "Gangsterski"),  
+
+(10, "Władca Pierścieni: Dwie wieże", "Fantasy"),  
+
+(11, "Joker", "Kryminał, Psychologiczny"),  
+
+(12, "Pianista", "Biograficzny, Wojenny"),  
+
+(13, "Milczenie owiec", "Thriller"); 
+
+ 
+
+INSERT INTO Repertuar (Data_od, Data_do, FilmID) VALUES  
+
+("2022-06-01", "2022-06-07", 1),  
+
+("2022-06-01", "2022-06-14", 2),  
+
+("2022-06-12", "2022-06-27", 3),  
+
+("2022-06-13", "2022-06-20", 4),  
+
+("2022-06-14", "2022-07-02", 5),  
+
+("2022-06-14", "2022-07-03", 6),  
+
+("2022-06-14", "2022-07-02", 7),  
+
+("2022-06-17", "2022-07-05", 8),  
+
+("2022-06-18", "2022-07-10", 9),  
+
+("2022-06-19", "2022-07-09", 10),  
+
+("2022-06-19", "2022-08-04", 11), 
+
+("2022-06-23", "2022-07-29", 12), 
+
+("2022-06-25", "2022-08-07", 13); 
+
+ 
+
+INSERT INTO Sala (Numer, Rodzaj_technologii) VALUES  
+
+(1, "IMAX"),  
+
+(2, "3D"),  
+
+(3, "2D"),  
+
+(4, "Dolby Atmos"),  
+
+(5, "VIP"),  
+
+(6, "2D"),  
+
+(7, "3D"); 
+
+
+
+INSERT INTO Klient (Imie, Nazwisko) VALUES  
+
+('Ania', 'Dudek'), 
+
+('Adam', 'Różycki'), 
+
+('Maria', 'Nowak'), 
+
+('Daniel', 'Zieliński'), 
+
+('Milena', 'Murawska'), 
+
+('Andrzej', 'Korzeniecki'), 
+
+('Bartołomiej', 'Czerkawski'), 
+
+('Daniel', 'Różycki'), 
+
+('Maria', 'Jabłońska'), 
+
+('Michał', 'Kołodziej'); 
+
+INSERT INTO Seans (FilmID, Godzina) VALUES  
+
+(1, '12:00'), 
+
+(1, '16:30'), 
+
+(1, '18:30'), 
+
+(2, '09:30'), 
+
+(2, '12:45'), 
+
+(2, '19:00'), 
+
+(3, '12:00'), 
+
+(3, '16:30'), 
+
+(3, '18:30'), 
+
+(4, '12:30'), 
+
+(4, '15:30'), 
+
+(4, '17:30'), 
+
+(5, '11:30'), 
+
+(5, '15:00'), 
+
+(5, '11:00'), 
+
+(6, '12:20'), 
+
+(6, '17:30'), 
+
+(7, '19:00'), 
+
+(7, '10:00'), 
+
+(8, '12:00'), 
+
+(8, '16:30'), 
+
+(9, '12:00'), 
+
+(9, '16:30'), 
+
+(10, '19:30'), 
+
+(10, '20:00'), 
+
+(11, '14:30'), 
+
+(11, '17:00'), 
+
+(12, '11:30'), 
+
+(13, '16:00'), 
+
+(13, '20:00'); 
+
+
+
+INSERT INTO Bilet (KlientID, SeansID, Rodzaj, Cena, SalaID, Rzad, Miejsce) VALUES  
+
+(1, 1, "normalny", 20, 1, 1, 1),  
+
+(2, 22, "Z kartą stałego klienta", 11, 2, 2, 2),  
+
+(3, 25, "Z kartą dużej rodziny", 13, 3, 3, 3),  
+
+(4, 7, "ulgowy", 15, 4, 4, 4),  
+
+(5, 2, "normalny", 20, 5, 5, 5),  
+
+(6, 4, "ulgowy", 15, 6, 6, 6),  
+
+(7,30, "Z kartą dużej rodziny", 13, 7, 7, 7),  
+
+(8, 8, "ulgowy", 15, 1, 8, 8),  
+
+(5, 9, "normalny", 20, 2, 9, 9),  
+
+(10, 11, "ulgowy", 15, 3, 10, 10),  
+
+(1, 15, "normalny", 20, 4, 11, 11),  
+
+(2, 11, "Z kartą stałego klienta", 11, 5, 12, 12), 
+
+(3, 14, "Z kartą dużej rodziny", 13, 6, 1, 13), 
+
+(4, 14, "ulgowy", 15, 7, 2, 14), 
+
+(5, 12, "normalny", 20, 1, 3, 15),  
+
+(6, 16, "ulgowy", 15, 2, 4, 16),  
+
+(3, 17, "Z kartą dużej rodziny", 13, 3, 5 , 17),  
+
+(8, 20, "ulgowy", 15, 4, 6 , 18),  
+
+(9, 4, "normalny", 20, 5, 7 , 19),  
+
+(10, 5, "ulgowy", 15, 6, 8 , 20); 
+
+
+select Tytul, Data_od, Data_do, godzina from Seans, Film, Repertuar where Seans.filmid = film.id and film.id = repertuar.filmid having godzina >= '19:00:00';
+select imie, nazwisko, cena, rodzaj, numer as `numer sali`, rodzaj_technologii from Klient, Bilet, Sala where Klient.id=Bilet.Klientid and Bilet.salaid=Sala.id having imie like '%a' order by nazwisko asc;
+select imie, nazwisko, sum(cena) as `Koszty biletów`, count(cena) as `ilość zakupionych biletów` from Klient, Bilet where Klient.id=Bilet.Klientid group by imie, nazwisko having imie not like '%a' order by nazwisko asc;
+select godzina, numer as `numer sali`, rodzaj_technologii as `rodzaj technologii` from Seans, Bilet, Sala where Seans.id=Bilet.Seansid and Bilet.salaid=Sala.id having rodzaj_technologii = '2D' order by godzina asc;
+select imie, nazwisko, numer as `numer sali`, rzad, miejsce, tytul as `nazwa filmu`, gatunek from Klient k, Bilet b, Seans s, sala sa, film f where k.id=b.Klientid and sa.id=b.salaid and s.id=b.seansid and f.id=s.filmid having nazwisko = 'Nowak' order by numer;
+
